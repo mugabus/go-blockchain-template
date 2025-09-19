@@ -1,105 +1,71 @@
 Go Blockchain Template
-
 A simple, modular blockchain implementation in Go that you can use as a learning project or customize for your own dApp.
 
 📂 Project Structure
-go-blockchain-template/
-├── api/
-│   └── http.go          # HTTP API endpoints
-│
-├── blockchain/
-│   ├── blockchain.go    # Blockchain manager
-│   ├── block.go         # Block + Proof of Work
-│   ├── transaction.go   # Transactions + signing
-│   └── wallet.go        # Wallets + keys
-│
-├── cmd/
-│   └── node/
-│       └── main.go      # Entry point (runs node)
-│
-├── go.mod
-└── READ
+The project is organized to be easy to understand and extend.
+
+api/: Contains the HTTP API endpoints that let you interact with the blockchain.
+
+blockchain/: The core logic of the blockchain, including blocks, transactions, wallets, and the Proof-of-Work algorithm.
+
+cmd/node/: The entry point for running the blockchain node.
 
 🚀 Getting Started
+Follow these steps to get the blockchain node up and running.
 
-1. Clone & Setup
-   git clone https://github.com/yourusername/go-blockchain-template.git
+Clone the repository:
+
+Bash
+
+git clone https://github.com/yourusername/go-blockchain-template.git
 cd go-blockchain-template
+Initialize Go modules:
+
+Bash
+
 go mod init go-blockchain-template
 go mod tidy
+Run the node:
+
+Bash
 
 go run ./cmd/node
-
-🚀 Starting Go Blockchain Node on :8080
+You'll see a message that the node is running on http://localhost:8080.
 
 🌐 API Endpoints
+The blockchain provides a simple REST API for common actions.
 
-| Endpoint                       | Method | Description                                     |
-| ------------------------------ | ------ | ----------------------------------------------- |
-| `/wallet/new`                  | GET    | Generate a new wallet (address + private key)   |
-| `/wallet/balance?addr=ADDRESS` | GET    | Get balance of an address                       |
-| `/tx/new`                      | POST   | Create a new transaction (from → to, amount)    |
-| `/mine?miner=ADDRESS`          | GET    | Mine pending transactions, reward goes to miner |
-| `/chain`                       | GET    | Show full blockchain                            |
-| `/mempool`                     | GET    | Show pending transactions                       |
+Endpoint	Method	Description
+/wallet/new	GET	Generates a new wallet (address + private key).
+/wallet/balance?addr=ADDRESS	GET	Gets the balance for a specific address.
+/tx/new	POST	Creates a new transaction.
+/mine?miner=ADDRESS	GET	Mines a new block with pending transactions.
+/chain	GET	Displays the entire blockchain.
+/mempool	GET	Shows pending transactions waiting to be mined.
 
-🛠️ Usage Examples (cURL)
-1. Create a Wallet
+Export to Sheets
+⚡ Key Features
+This template includes fundamental blockchain concepts to get you started:
 
-   curl http://localhost:8080/wallet/new
-Response:
+Proof-of-Work (PoW): A basic consensus mechanism.
 
-{
-  "address": "04d2c13...",
-  "private_key": "-----BEGIN EC PRIVATE KEY-----\n..."
-}
-2. Check Balance
+Wallets: Uses ECDSA keys for secure transactions.
 
-curl "http://localhost:8080/wallet/balance?addr=04d2c13..."
+Signed Transactions: Ensures transactions are authentic and tamper-proof.
 
-3. Create a Transaction
+Mining Rewards: A simple reward system for miners.
 
-   curl -X POST http://localhost:8080/tx/new \
-  -H "Content-Type: application/json" \
-  -d '{"from":"ADDR1","to":"ADDR2","amount":5}'
+In-memory data: The current state is stored in memory. Note that data will not persist after the application closes.
 
-4. Mine a Block
+📌 Next Steps & Customization
+This project is a great starting point. To build a more robust application, consider these enhancements:
 
-   curl "http://localhost:8080/mine?miner=ADDR1"
-5. View Blockchain
+Data Persistence: Use a database like BoltDB or LevelDB to save the blockchain to disk.
 
-   curl http://localhost:8080/chain
+P2P Networking: Implement a peer-to-peer network for node synchronization.
 
-⚡ Features
+Double-Spend Prevention: Add logic for nonce or gas to prevent duplicate transactions.
 
-Basic Proof-of-Work consensus
+Smart Contracts: Integrate a virtual machine (e.g., WASM or EVM) for executing smart contracts.
 
-Wallets with ECDSA keys
-
-Signed transactions
-
-In-memory balances
-
-Mining rewards
-
-HTTP JSON API
-
-📌 Next Steps / Customization
-
-This template is intentionally simple. You can extend it with:
-
-Persistence (BoltDB/LevelDB) so data survives restarts
-
-P2P networking (so multiple nodes sync)
-
-Nonce / gas handling (prevent double-spends)
-
-Smart contract execution (WASM/EVM)
-
-REST or gRPC APIs for your dApp frontend
-
-✍️ Author: Eddy Mugaruka
-📖 License: MIT
-
-
-ME.md
+✍️ Author: Eddy Mugaruka 📖 License: MIT
